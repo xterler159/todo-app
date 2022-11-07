@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import styled, { StyledComponent } from "styled-components";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -5,7 +6,7 @@ import { DevTool } from "@hookform/devtools";
 import * as yup from "yup";
 
 import Input from "../../components/Input/Input";
-import React, { useState } from "react";
+import List from "../../components/List/List";
 
 export interface IButton {
   primary?: boolean;
@@ -71,17 +72,33 @@ const AddTodo = () => {
     register,
     handleSubmit,
     control,
+    setValue,
     formState: {
       errors
     }
   } = useForm<AddTodoInputs>({ resolver: yupResolver(validationSchema) });
   const [todos, setTodos] = useState<any[]>([]);
 
+  useEffect(() => {
+    const savedTodos = localStorage.getItem("todos");
+
+    if (savedTodos) {
+      const savedTodosParsed = JSON.parse(savedTodos);
+      setTodos(savedTodosParsed);
+    }
+  }, []);
+
+
   const onSubmit = (data: any) => {
-    setTodos(prevState => [...prevState, data.todoName])
+    setTodos(prevState => [...prevState, data.todoName]);
+    setValue("todoName", "");
   };
 
-  console.log("todos:", todos);
+  const handleSaveToLocalStorage = () => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+    alert("Saved todos !");
+  };
+
   return (
     <Wrapper>
       <FormWrapper>
@@ -90,6 +107,9 @@ const AddTodo = () => {
           <Button primary className="add-btn" type="submit">Add</Button>
         </form>
       </FormWrapper>
+
+      <List data={todos} />
+      <Button onClick={handleSaveToLocalStorage}>Save</Button>
       <DevTool control={control} />
     </Wrapper>
   );
