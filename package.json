@@ -26,13 +26,10 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "eject": "react-scripts eject",
+    "lint": "eslint --fix ./",
+    "test:coverage": "npm test -- --coverage",
+    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,css,scss,md}\""
   },
   "browserslist": {
     "production": [
@@ -48,6 +45,7 @@
   },
   "devDependencies": {
     "@hookform/devtools": "^4.2.3",
-    "@types/styled-components": "^5.1.26"
+    "@types/styled-components": "^5.1.26",
+    "prettier": "^2.7.1"
   }
 }

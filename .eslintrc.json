@@ -1,0 +1,14 @@
+{
+  "root": true,
+  "extends": ["react-app", "react-app/jest"],
+  "rules": {
+    "import/order": [
+      "warn",
+      {
+        "alphabetize": {
+          "order": "asc"
+        }
+      }
+    ]
+  }
+}

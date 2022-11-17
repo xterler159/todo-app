@@ -1,7 +1,6 @@
-import React, { FC } from "react";
-import styled from "styled-components";
-import { UseFormRegister } from "react-hook-form";
-
+import React, { FC } from "react"
+import { UseFormRegister } from "react-hook-form"
+import styled from "styled-components"
 
 const Wrapper = styled.div`
   display: flex;
@@ -12,11 +11,11 @@ const Wrapper = styled.div`
   .error-msg {
     margin-left: 5px;
   }
-`;
+`
 
 const ErrorMessage = styled.span`
   font-size: 0.9em;
-  color: #E91E63;
+  color: #e91e63;
   margin-left: 5px;
 `
 
@@ -30,13 +29,12 @@ export type InputError = {
 }
 
 export interface InputProps {
-  register: UseFormRegister<any>;
-  name: string;
-  placeholder?: string;
-  required?: boolean;
-  error?: any;
+  register: UseFormRegister<any>
+  name: string
+  placeholder?: string
+  required?: boolean
+  error?: any
 }
-
 
 // props: React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, { test }: InputProps
 const Input: FC<InputProps> = ({ register, name, placeholder, required, error }) => {
@@ -47,7 +45,7 @@ const Input: FC<InputProps> = ({ register, name, placeholder, required, error })
       </Wrapper>
       {error[name] && <ErrorMessage>{error[name].message}</ErrorMessage>}
     </>
-  );
-};
+  )
+}
 
-export default Input;
+export default Input

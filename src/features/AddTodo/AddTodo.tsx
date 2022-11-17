@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react";
-import styled, { StyledComponent } from "styled-components";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { DevTool } from "@hookform/devtools";
-import * as yup from "yup";
+import { DevTool } from "@hookform/devtools"
+import { yupResolver } from "@hookform/resolvers/yup"
+import { useEffect, useState } from "react"
+import { useForm } from "react-hook-form"
+import styled, { StyledComponent } from "styled-components"
+import * as yup from "yup"
 
-import Input from "../../components/Input/Input";
-import List from "../../components/List/List";
+import Input from "../../components/Input/Input"
+import List from "../../components/List/List"
 
 export interface IButton {
-  primary?: boolean;
+  primary?: boolean
 }
 
 const Wrapper: StyledComponent<"section", {}, any> = styled.section`
@@ -23,7 +23,7 @@ const Wrapper: StyledComponent<"section", {}, any> = styled.section`
   justify-content: center;
   flex-direction: column;
   //border: 1px solid crimson;
-`;
+`
 
 const FormWrapper: StyledComponent<"div", {}, any> = styled.div`
   form {
@@ -38,9 +38,9 @@ const FormWrapper: StyledComponent<"div", {}, any> = styled.div`
   #addTask {
     padding: 0.5rem;
     border-radius: 5px;
-    border: solid 1px #9E9E9E;
+    border: solid 1px #9e9e9e;
   }
-`;
+`
 
 const Button = styled.button`
   /* Adapt the colors based on primary prop */
@@ -57,15 +57,15 @@ const Button = styled.button`
   &:hover {
     cursor: pointer;
   }
-`;
+`
 
 export type AddTodoInputs = {
   todoName: string
 }
 
 const validationSchema = yup.object({
-  todoName: yup.string().required("required")
-});
+  todoName: yup.string().required("required"),
+})
 
 const AddTodo = () => {
   const {
@@ -73,38 +73,37 @@ const AddTodo = () => {
     handleSubmit,
     control,
     setValue,
-    formState: {
-      errors
-    }
-  } = useForm<AddTodoInputs>({ resolver: yupResolver(validationSchema) });
-  const [todos, setTodos] = useState<any[]>([]);
+    formState: { errors },
+  } = useForm<AddTodoInputs>({ resolver: yupResolver(validationSchema) })
+  const [todos, setTodos] = useState<any[]>([])
 
   useEffect(() => {
-    const savedTodos = localStorage.getItem("todos");
+    const savedTodos = localStorage.getItem("todos")
 
     if (savedTodos) {
-      const savedTodosParsed = JSON.parse(savedTodos);
-      setTodos(savedTodosParsed);
+      const savedTodosParsed = JSON.parse(savedTodos)
+      setTodos(savedTodosParsed)
     }
-  }, []);
-
+  }, [])
 
   const onSubmit = (data: any) => {
-    setTodos(prevState => [...prevState, data.todoName]);
-    setValue("todoName", "");
-  };
+    setTodos((prevState) => [...prevState, data.todoName])
+    setValue("todoName", "")
+  }
 
   const handleSaveToLocalStorage = () => {
-    localStorage.setItem("todos", JSON.stringify(todos));
-    alert("Saved todos !");
-  };
+    localStorage.setItem("todos", JSON.stringify(todos))
+    alert("Saved todos !")
+  }
 
   return (
-    <Wrapper>
+    <Wrapper data-testid="AddTodo">
       <FormWrapper>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Input register={register} name="todoName" error={errors} />
-          <Button primary className="add-btn" type="submit">Add</Button>
+          <Button primary className="add-btn" type="submit">
+            Add
+          </Button>
         </form>
       </FormWrapper>
 
@@ -112,7 +111,7 @@ const AddTodo = () => {
       <Button onClick={handleSaveToLocalStorage}>Save</Button>
       <DevTool control={control} />
     </Wrapper>
-  );
-};
+  )
+}
 
-export default AddTodo;
+export default AddTodo
